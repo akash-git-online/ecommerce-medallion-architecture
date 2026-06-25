@@ -22,3 +22,6 @@ spark/jobs/gx/uncommitted/
 # OS
 .DS_Store
 Thumbs.db
+
+# Source data files
+data/

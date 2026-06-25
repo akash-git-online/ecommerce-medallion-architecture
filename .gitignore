@@ -1,0 +1,24 @@
+# Credentials
+.env
+
+# Notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Delta tables — too large for GitHub
+spark/delta/
+
+# Airflow logs
+airflow/logs/
+
+# Great Expectations uncommitted results
+spark/jobs/gx/uncommitted/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,4 @@
+boto3
+python-dotenv
+great-expectations
+pyspark==3.5.0

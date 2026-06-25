@@ -1,0 +1,40 @@
+{
+  "expectations": [
+    {
+      "id": "32410071-16d7-4129-a3a8-5054d98b3435",
+      "kwargs": {
+        "column": "customer_id"
+      },
+      "meta": {},
+      "severity": "critical",
+      "type": "expect_column_values_to_not_be_null"
+    },
+    {
+      "id": "98676622-991a-4963-aa2d-db73de0cf75f",
+      "kwargs": {
+        "max_value": 110000,
+        "min_value": 90000
+      },
+      "meta": {},
+      "severity": "critical",
+      "type": "expect_table_row_count_to_be_between"
+    },
+    {
+      "id": "9d8fd61a-0dbc-4214-80ae-7e2b783e7ebc",
+      "kwargs": {
+        "column": "customer_state",
+        "max_value": 2,
+        "min_value": 2
+      },
+      "meta": {},
+      "severity": "critical",
+      "type": "expect_column_value_lengths_to_be_between"
+    }
+  ],
+  "id": "5e00e6c1-8d94-41a3-960e-13b4010b6c9d",
+  "meta": {
+    "great_expectations_version": "1.18.1"
+  },
+  "name": "bronze_customers_suite",
+  "notes": null
+}

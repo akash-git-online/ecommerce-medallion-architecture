@@ -11,20 +11,23 @@ def create_spark_session():
 
     spark = (
     SparkSession.builder
-    .master("local[*]")
+    .master("local[2]")
     .appName("landing_to_bronze")
+    # Bound each job's resources so several can run in parallel under Airflow
+    # without oversubscribing CPU/memory and OOM-ing the jupyter container.
+    .config("spark.driver.memory", "1g")
+    .config("spark.sql.shuffle.partitions", "8")
     .config("spark.jars.packages", "org.apache.hadoop:hadoop-aws:3.3.4,io.delta:delta-spark_2.12:3.0.0")
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
     .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
-    .config("fs.s3a.endpoint", os.getenv("MINIO_ENDPOINT_DOCKER"))
-    .config("fs.s3a.access.key", os.getenv("MINIO_ACCESS_KEY"))
-    .config("fs.s3a.secret.key", os.getenv("MINIO_SECRET_KEY"))
-    .config("fs.s3a.path.style.access", "true")
-    .config("fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
-    .config("fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
+    .config("spark.hadoop.fs.s3a.endpoint", os.getenv("MINIO_ENDPOINT_DOCKER"))
+    .config("spark.hadoop.fs.s3a.access.key", os.getenv("MINIO_ACCESS_KEY"))
+    .config("spark.hadoop.fs.s3a.secret.key", os.getenv("MINIO_SECRET_KEY"))
+    .config("spark.hadoop.fs.s3a.path.style.access", "true")
+    .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem")
+    .config("spark.hadoop.fs.s3a.aws.credentials.provider", "org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider")
     .getOrCreate()
     )
-
     return spark
 
 def read_from_landing(spark, dataset_name):
